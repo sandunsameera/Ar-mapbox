@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterapp/Screens/main_screen.dart';
-
+import 'package:flutterapp/Screens/login_screen.dart';
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -9,7 +8,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home:MainScreen()
+      home:LoginPage()
     );
   }
 }

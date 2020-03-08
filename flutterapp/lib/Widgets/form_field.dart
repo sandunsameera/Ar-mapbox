@@ -1,24 +1,32 @@
 import 'package:flutter/material.dart';
 
-class LabelTextFormField extends StatelessWidget {
+class LabelTextField extends StatelessWidget {
   final String hintText;
   final String labelText;
-  final String errorText;
   final bool isObscure;
+  final String controller;
   final TextCapitalization textCapitalization;
   final TextInputType keyboardType;
   final validator;
   final onSaved;
-
-  LabelTextFormField({
+  final textEditingController;
+  final Function onTap;
+  final IconButton iconButton;
+  final Icon icon;
+  LabelTextField({
     this.hintText,
-    this.errorText,
     this.isObscure = false,
     this.textCapitalization = TextCapitalization.none,
     this.keyboardType = TextInputType.text,
     this.labelText,
     this.validator,
     this.onSaved,
+    this.controller,
+    this.textEditingController,
+    this.icon,
+    this.onTap,
+    this.iconButton,
+    
   });
 
   @override
@@ -29,17 +37,21 @@ class LabelTextFormField extends StatelessWidget {
         decoration: new InputDecoration(
           hintText: hintText,
           labelText: labelText,
-          errorText: errorText,
-          labelStyle: TextStyle(color: Colors.black45),
           filled: true,
           fillColor: Colors.black12,
           border: InputBorder.none,
+          icon: icon,
+          // alignLabelWithHint: true,
+          hoverColor: Colors.indigo
+          
         ),
+        controller: textEditingController,
         textCapitalization: textCapitalization,
         keyboardType: keyboardType,
         obscureText: isObscure,
         validator: validator,
         onSaved: onSaved,
+        onTap: onTap,
       ),
     );
   }
