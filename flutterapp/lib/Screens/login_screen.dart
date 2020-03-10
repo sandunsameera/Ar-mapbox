@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/Screens/main_screen.dart';
 
-import 'admin_screen.dart';
+import 'Admin/admin_screen.dart';
+
+
 
 class LoginPage extends StatefulWidget {
   static String tag = 'login-page';

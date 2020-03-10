@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterapp/Screens/single_notice.dart';
 import 'package:flutterapp/Widgets/form_field.dart';
 
 class AdminScreen extends StatefulWidget {
@@ -25,23 +24,26 @@ class _AdminScreenState extends State<AdminScreen> {
       "hall": _hall.text,
       "desc": _desc.text,
       "date": _date.text,
+      'id': DateTime.utc(1).toString(),
     };
-    collectionReference.add(data).whenComplete(() => {
-      Navigator.pop(context)
-    });
+    collectionReference.add(data).whenComplete(() => {Navigator.pop(context)});
   }
 
   void getNotices() async {
     QuerySnapshot querySnapshot =
         await Firestore.instance.collection("Notices").getDocuments();
-    data = querySnapshot.documents;
-    print(data.length);
+    if (this.mounted) {
+      setState(() {
+        data = querySnapshot.documents;
+        print(data.length);
+      });
+    }
   }
 
   @override
   void initState() {
-    this.getNotices();
     super.initState();
+    this.getNotices();
   }
 
   @override
@@ -61,9 +63,7 @@ class _AdminScreenState extends State<AdminScreen> {
     return data != null && data.length != null && data.length > 0
         ? ListView.builder(
             shrinkWrap: true,
-            itemCount: data != null && data.length != null && data.length > 0
-                ? data.length
-                : 0,
+            itemCount: data.length !=null?data.length:0,
             itemBuilder: (BuildContext context, int index) {
               return InkWell(
                 child: Card(

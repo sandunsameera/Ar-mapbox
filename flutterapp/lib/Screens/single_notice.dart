@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterapp/utils/data_parser.dart';
 
 class SingleNotice extends StatefulWidget {
   @override
@@ -6,6 +8,24 @@ class SingleNotice extends StatefulWidget {
 }
 
 class _SingleNoticeState extends State<SingleNotice> {
+
+  var data;
+
+  void getNotices(String id) async {
+    QuerySnapshot querySnapshot =
+        await Firestore.instance.collection("Notices").where("id",isEqualTo: id).getDocuments();
+    data = querySnapshot.documents;
+    print(data);
+  }
+
+  @override
+  void initState() {
+    this.getNotices(Dataparser.id);
+    super.initState();
+    print(data);
+  }
+
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,7 +34,7 @@ class _SingleNoticeState extends State<SingleNotice> {
   }
 
   Widget _singleNoticeBody() {
-    return Column(
+    return data!=null && data.length!=null && data.length>0?Column(
       children: <Widget>[
         SizedBox(height: 20),
         Card(
@@ -27,7 +47,7 @@ class _SingleNoticeState extends State<SingleNotice> {
               color: Color(0xff244475),
               child: Center(
                 child: Text(
-                  "Notice header 1",
+                  data[0]['title'] != null?data[0]['title']:"Still loading",
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,
@@ -40,14 +60,14 @@ class _SingleNoticeState extends State<SingleNotice> {
           width: MediaQuery.of(context).size.width,
           child: Center(
             child: Text(
-              "This is the description",
+              data[0]['desc'] != null?data[0]['desc']:"Still loading",
               style: TextStyle(fontSize: 20),
             ),
           ),
         ),
         ListTile(
           leading: Text("Date :"),
-          trailing: Text("Date"),
+          trailing: Text(data[0]['date']!= null?data[0]['desc']:"Still loading"),
         ),
         SizedBox(height: 20),
         Center(
@@ -60,6 +80,10 @@ class _SingleNoticeState extends State<SingleNotice> {
           ),
         )
       ],
+    ):Container(
+      child: Center(
+        child: Text("Fuck off"),
+      ),
     );
   }
 }
