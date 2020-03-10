@@ -17,7 +17,6 @@ class _NoticeScreenState extends State<NoticeScreen> {
     if (this.mounted) {
       setState(() {
         data = querySnapshot.documents;
-        print(data.length);
       });
     }
   }
@@ -74,6 +73,10 @@ class _NoticeScreenState extends State<NoticeScreen> {
                             )),
                       ),
                       ListTile(
+                        onTap: (){
+                          Dataparser.id = data[index]['id'].toString();
+                          Navigator.push(context,MaterialPageRoute(builder: (context)=>SingleNotice()));
+                        },
                         leading: Text(
                           data[index]['hall'],
                           style: TextStyle(

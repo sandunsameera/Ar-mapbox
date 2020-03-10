@@ -14,15 +14,18 @@ class _SingleNoticeState extends State<SingleNotice> {
   void getNotices(String id) async {
     QuerySnapshot querySnapshot =
         await Firestore.instance.collection("Notices").where("id",isEqualTo: id).getDocuments();
-    data = querySnapshot.documents;
-    print(data);
+     if (this.mounted) {
+      setState(() {
+        data = querySnapshot.documents;
+      });
+    }
   }
 
   @override
   void initState() {
-    this.getNotices(Dataparser.id);
     super.initState();
-    print(data);
+    this.getNotices(Dataparser.id);
+    print(Dataparser.id);
   }
 
   
@@ -34,7 +37,7 @@ class _SingleNoticeState extends State<SingleNotice> {
   }
 
   Widget _singleNoticeBody() {
-    return data!=null && data.length!=null && data.length>0?Column(
+    return data!=null && data.length!=null?Column(
       children: <Widget>[
         SizedBox(height: 20),
         Card(
@@ -67,7 +70,7 @@ class _SingleNoticeState extends State<SingleNotice> {
         ),
         ListTile(
           leading: Text("Date :"),
-          trailing: Text(data[0]['date']!= null?data[0]['desc']:"Still loading"),
+          trailing: Text(data[0]['date']!= null?data[0]['date']:"Still loading"),
         ),
         SizedBox(height: 20),
         Center(
@@ -82,7 +85,7 @@ class _SingleNoticeState extends State<SingleNotice> {
       ],
     ):Container(
       child: Center(
-        child: Text("Fuck off"),
+        child: CircularProgressIndicator(),
       ),
     );
   }
