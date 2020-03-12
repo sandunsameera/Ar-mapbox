@@ -1,9 +1,27 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/button_list.dart';
+import 'package:flutter_signin_button/button_view.dart';
 import 'package:flutterapp/Screens/main_screen.dart';
+import 'package:flutterapp/Screens/notices_screen.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import 'Admin/admin_screen.dart';
 
+class userDetails {
+  final String providerDetail;
+  final String userName;
+  final String photoUrl;
+  final String userEmail;
+  final List<ProviderDetails> providerData;
+  userDetails(this.providerDetail, this.userName, this.photoUrl, this.userEmail,
+      this.providerData);
+}
 
+class ProviderDetails {
+  ProviderDetails(this.providerDetails);
+  final String providerDetails;
+}
 
 class LoginPage extends StatefulWidget {
   static String tag = 'login-page';
@@ -12,6 +30,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  FirebaseUser user;
+
   TextEditingController _email = TextEditingController();
   TextEditingController _passowrd = TextEditingController();
 
@@ -79,6 +101,32 @@ class _LoginPageState extends State<LoginPage> {
       onPressed: () {},
     );
 
+    Future<String> signInWithGoogle() async {
+      final GoogleSignInAccount googleSignInAccount =
+          await _googleSignIn.signIn();
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleSignInAccount.authentication;
+
+      final AuthCredential credential = GoogleAuthProvider.getCredential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
+
+      final AuthResult authResult = await _auth
+          .signInWithCredential(credential)
+          .whenComplete(() => Navigator.push(context,
+              MaterialPageRoute(builder: (context) => NoticeScreen())));
+      final FirebaseUser user = authResult.user;
+
+      assert(!user.isAnonymous);
+      assert(await user.getIdToken() != null);
+
+      final FirebaseUser currentUser = await _auth.currentUser();
+      assert(user.uid == currentUser.uid);
+
+      return 'signInWithGoogle succeeded: $user';
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
@@ -93,7 +141,13 @@ class _LoginPageState extends State<LoginPage> {
             password,
             SizedBox(height: 24.0),
             loginButton,
-            forgotLabel
+            Center(child: Text("Or",style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.bold),),)
+            SignInButton(
+              Buttons.GoogleDark,
+              onPressed: () {
+                signInWithGoogle();
+              },
+            ),
           ],
         ),
       ),
