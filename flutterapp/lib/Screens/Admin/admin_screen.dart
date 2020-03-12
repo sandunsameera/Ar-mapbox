@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/Widgets/form_field.dart';
+import 'package:flutterapp/utils/data_parser.dart';
 
 class AdminScreen extends StatefulWidget {
   @override
@@ -14,6 +15,7 @@ class _AdminScreenState extends State<AdminScreen> {
   TextEditingController _hall = TextEditingController();
 
   var data;
+  var singledata;
 
   final CollectionReference collectionReference =
       Firestore.instance.collection("Notices");
@@ -40,10 +42,39 @@ class _AdminScreenState extends State<AdminScreen> {
     }
   }
 
+  void getNoticebyId(String id) async {
+    QuerySnapshot querySnapshot = await Firestore.instance
+        .collection("Notices")
+        .where("id", isEqualTo: id)
+        .getDocuments();
+    if (this.mounted) {
+      setState(() {
+        singledata = querySnapshot.documents;
+      });
+    }
+  }
+
+  void updateData(String id, newValues) {
+    Firestore.instance
+        .collection("Notices")
+        .document()
+        .updateData(newValues)
+        .catchError((e) => print(e));
+  }
+
+  void deleteData(docId) {
+    Firestore.instance
+        .collection("Notices")
+        .document(docId)
+        .delete().whenComplete(()=>print("Deleted"))
+        .catchError((e) => print(e));
+  }
+
   @override
   void initState() {
     super.initState();
     this.getNotices();
+    this.getNoticebyId(Dataparser.id);
   }
 
   @override
@@ -63,7 +94,7 @@ class _AdminScreenState extends State<AdminScreen> {
     return data != null && data.length != null && data.length > 0
         ? ListView.builder(
             shrinkWrap: true,
-            itemCount: data.length !=null?data.length:0,
+            itemCount: data.length != null ? data.length : 0,
             itemBuilder: (BuildContext context, int index) {
               return InkWell(
                 child: Card(
@@ -92,6 +123,24 @@ class _AdminScreenState extends State<AdminScreen> {
                         ),
                         trailing: Text(data[index]['date']),
                       ),
+                      ListTile(
+                        leading: IconButton(
+                            icon: Icon(
+                              Icons.edit,
+                              color: Colors.green,
+                            ),
+                            onPressed: () {
+                            Dataparser.id = data[index]['id'];
+                            _showEditDialog(context,Dataparser.id);
+                            }),
+                        trailing: IconButton(
+                            icon: Icon(Icons.delete, color: Colors.red),
+                            onPressed: () {
+                              Dataparser.id = data[index]['id'];
+                              print(data[index]['id']);
+                              deleteData(data[index]['id']);
+                            }),
+                      ),
                       SizedBox(height: 20)
                     ],
                   ),
@@ -101,7 +150,7 @@ class _AdminScreenState extends State<AdminScreen> {
           )
         : Container(
             child: Center(
-              child: Text("Currently no notices"),
+              child: CircularProgressIndicator(),
             ),
           );
   }
@@ -145,6 +194,62 @@ class _AdminScreenState extends State<AdminScreen> {
                     writeNotice();
                   },
                   child: Text("Submit"),
+                  color: Colors.green,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
+                ),
+              )
+            ],
+          ),
+        )),
+      ),
+    );
+  }
+
+  void _showEditDialog(BuildContext context, selectedDoc) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('Add a notice'),
+        content: Container(
+            child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              LabelTextField(
+                hintText: "Enter the hall number",
+                labelText: "Hall number",
+                textEditingController: singledata[0]['hall'],
+              ),
+              SizedBox(height: 20),
+              LabelTextField(
+                hintText: "Title of notice",
+                labelText: "Title",
+                textEditingController: _title,
+              ),
+              SizedBox(height: 20),
+              LabelTextField(
+                hintText: "Description of notice",
+                labelText: "Description",
+                textEditingController: _desc,
+              ),
+              SizedBox(height: 20),
+              LabelTextField(
+                hintText: "Date",
+                labelText: "Date",
+                textEditingController: _date,
+              ),
+              SizedBox(height: 20),
+              Center(
+                child: RaisedButton(
+                  onPressed: () {
+                    updateData(Dataparser.id, {
+                      "hall": this._hall,
+                      "title": this._title,
+                      "desc": this._desc,
+                      "date": this._date
+                    });
+                  },
+                  child: Text("Update"),
                   color: Colors.green,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8)),

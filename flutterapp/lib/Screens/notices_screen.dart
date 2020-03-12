@@ -96,7 +96,7 @@ class _NoticeScreenState extends State<NoticeScreen> {
         : Container(
             child: Center(
                 child: InkWell(
-              child: Text("Currently no notices"),
+              child: CircularProgressIndicator(),
               onTap: () => Navigator.push(context,
                   MaterialPageRoute(builder: (context) => SingleNotice())),
             )),
