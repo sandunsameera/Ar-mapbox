@@ -141,7 +141,15 @@ class _LoginPageState extends State<LoginPage> {
             password,
             SizedBox(height: 24.0),
             loginButton,
-            Center(child: Text("Or",style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.bold),),)
+            Center(
+              child: Text(
+                "Or",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
             SignInButton(
               Buttons.GoogleDark,
               onPressed: () {
