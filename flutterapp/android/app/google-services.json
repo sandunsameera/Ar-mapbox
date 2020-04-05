@@ -10,15 +10,52 @@
       "client_info": {
         "mobilesdk_app_id": "1:253033176125:android:d4994adbba3c344c735e54",
         "android_client_info": {
-          "package_name": "com.example.flutterapp"
+          "package_name": "com.sandun.armap"
         }
       },
       "oauth_client": [
         {
-          "client_id": "253033176125-cne30k3ub79oh9tbpv55431hs8s7h5pf.apps.googleusercontent.com",
+          "client_id": "253033176125-2gg72688cat7muq46o30756d2o7sqro4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.flutterapp",
+            "package_name": "com.sandun.armap",
+            "certificate_hash": "234be22691e969a4a3bc54091997c4c00a579aaf"
+          }
+        },
+        {
+          "client_id": "253033176125-21fun49cjhga0evqnu689p5el27o6rpv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlF__ziu6Iix78FQ7qVlsZVaHfyeVfk8s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "253033176125-21fun49cjhga0evqnu689p5el27o6rpv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:253033176125:android:79f5f72bbe995951735e54",
+        "android_client_info": {
+          "package_name": "com.sandun.armap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "253033176125-e1n3naolv3nvsqvnuu2plj764ggqjod4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sandun.armap",
             "certificate_hash": "234be22691e969a4a3bc54091997c4c00a579aaf"
           }
         },

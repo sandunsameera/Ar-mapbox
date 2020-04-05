@@ -2,14 +2,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/Screens/User/compose_issues.dart';
 import 'package:flutterapp/Screens/User/single_notice.dart';
+import 'package:flutterapp/Screens/maps_screen.dart';
+import 'package:flutterapp/Screens/unity_screen.dart';
 import 'package:flutterapp/utils/data_parser.dart';
+
+import '../../main.dart';
 
 class NoticeScreen extends StatefulWidget {
   @override
   _NoticeScreenState createState() => _NoticeScreenState();
 }
 
-class _NoticeScreenState extends State<NoticeScreen> with TickerProviderStateMixin{
+class _NoticeScreenState extends State<NoticeScreen>
+    with TickerProviderStateMixin {
   // static final GoogleSignIn _googleSignIn = GoogleSignIn();
   var data;
   TabController _nestedTabController;
@@ -37,6 +42,39 @@ class _NoticeScreenState extends State<NoticeScreen> with TickerProviderStateMix
     return Scaffold(
       body: Column(
         children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Container(
+                height: MediaQuery.of(context).size.height / 15,
+                child: IconButton(
+                    icon: Icon(
+                      Icons.camera_enhance,
+                      color: Colors.teal,
+                      size: 50,
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SplashScreen()));
+                    }),
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height / 15,
+                child: IconButton(
+                    icon: Icon(
+                      Icons.map,
+                      color: Colors.teal,
+                      size: 50,
+                    ),
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => HomePage()));
+                    }),
+              ),
+            ],
+          ),
           Padding(padding: EdgeInsets.only(top: 30)),
           TabBar(
             controller: _nestedTabController,
@@ -141,6 +179,4 @@ class _NoticeScreenState extends State<NoticeScreen> with TickerProviderStateMix
             )),
           );
   }
-
- 
 }

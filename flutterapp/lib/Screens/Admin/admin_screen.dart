@@ -1,11 +1,11 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/Screens/Admin/hall_issues.dart';
+import 'package:flutterapp/Screens/maps_screen.dart';
+import 'package:flutterapp/Screens/unity_screen.dart';
+
 import 'package:flutterapp/Widgets/form_field.dart';
 import 'package:flutterapp/utils/data_parser.dart';
-import 'package:image_picker_modern/image_picker_modern.dart';
 
 class AdminScreen extends StatefulWidget {
   @override
@@ -86,31 +86,45 @@ class _AdminScreenState extends State<AdminScreen>
     this.getNoticebyId(Dataparser.id);
   }
 
-  File _image;
-
-  Future getImage() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.camera);
-
-    setState(() {
-      _image = image;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: <Widget>[
-          Container(
-            height: MediaQuery.of(context).size.height / 15,
-            child: IconButton(
-                icon: Icon(
-                  Icons.camera_enhance,
-                  size: 50,
-                ),
-                onPressed: () {
-                  getImage();
-                }),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Container(
+                height: MediaQuery.of(context).size.height / 15,
+                child: IconButton(
+                    icon: Icon(
+                      Icons.camera_enhance,
+                      color: Colors.teal,
+                      size: 50,
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SplashScreen()));
+                    }),
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height / 15,
+                child: IconButton(
+                    icon: Icon(
+                      Icons.map,
+                      color: Colors.teal,
+                      size: 50,
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HomePage()));
+                    }),
+              ),
+            ],
           ),
           Padding(padding: EdgeInsets.only(top: 30)),
           TabBar(
@@ -143,6 +157,7 @@ class _AdminScreenState extends State<AdminScreen>
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.teal,
         onPressed: () {
           _showNoteDialog(context);
         },

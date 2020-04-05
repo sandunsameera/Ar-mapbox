@@ -2,13 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
-import 'package:flutterapp/Screens/main_screen.dart';
+import 'package:flutterapp/Screens/User/notices_screen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import './main_screen.dart';
 import 'package:toast/toast.dart';
 
 import 'Admin/admin_screen.dart';
-import 'User/notices_screen.dart';
-
 class UserDetails {
   final String providerDetail;
   final String userName;
