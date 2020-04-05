@@ -3,18 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
 import 'package:flutterapp/Screens/main_screen.dart';
-import 'package:flutterapp/Screens/notices_screen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:toast/toast.dart';
 
 import 'Admin/admin_screen.dart';
+import 'User/notices_screen.dart';
 
-class userDetails {
+class UserDetails {
   final String providerDetail;
   final String userName;
   final String photoUrl;
   final String userEmail;
   final List<ProviderDetails> providerData;
-  userDetails(this.providerDetail, this.userName, this.photoUrl, this.userEmail,
+  UserDetails(this.providerDetail, this.userName, this.photoUrl, this.userEmail,
       this.providerData);
 }
 
@@ -32,6 +33,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+
   FirebaseUser user;
 
   TextEditingController _email = TextEditingController();
@@ -82,23 +84,20 @@ class _LoginPageState extends State<LoginPage> {
           if (_email.text == 'admin' && _passowrd.text == 'admin') {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => AdminScreen()));
-          } else {
+            Toast.show("Successfully logged as Admin", context);
+          } else if (_email.text == 'student' && _passowrd.text == 'student') {
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => MainScreen()));
+            Toast.show("Successfully logged as student", context);
+          } else {
+            Toast.show("Failed check credintials", context,
+                duration: Toast.LENGTH_LONG);
           }
         },
         padding: EdgeInsets.all(12),
         color: Colors.lightBlueAccent,
         child: Text('Log In', style: TextStyle(color: Colors.white)),
       ),
-    );
-
-    final forgotLabel = FlatButton(
-      child: Text(
-        'Forgot password?',
-        style: TextStyle(color: Colors.black54),
-      ),
-      onPressed: () {},
     );
 
     Future<String> signInWithGoogle() async {
@@ -112,10 +111,13 @@ class _LoginPageState extends State<LoginPage> {
         idToken: googleSignInAuthentication.idToken,
       );
 
-      final AuthResult authResult = await _auth
-          .signInWithCredential(credential)
-          .whenComplete(() => Navigator.push(context,
-              MaterialPageRoute(builder: (context) => NoticeScreen())));
+      final AuthResult authResult =
+          await _auth.signInWithCredential(credential).whenComplete(() {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => NoticeScreen()));
+            Toast.show("Succesfully logged using gmail", context,duration: Toast.LENGTH_LONG);
+      });
+
       final FirebaseUser user = authResult.user;
 
       assert(!user.isAnonymous);
@@ -150,6 +152,7 @@ class _LoginPageState extends State<LoginPage> {
                     fontWeight: FontWeight.bold),
               ),
             ),
+            SizedBox(height: 24.0),
             SignInButton(
               Buttons.GoogleDark,
               onPressed: () {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'notices_screen.dart';
+import 'User/notices_screen.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -11,6 +11,10 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text("All notices"),),
+      drawer: Drawer(
+        child:  _drawer(),
+      ),
       body: _mainScreenBody(),
     );
   }
@@ -34,5 +38,9 @@ class _MainScreenState extends State<MainScreen> {
         ),
       ),
     );
+  }
+
+  Widget _drawer(){
+    return Container();
   }
 }

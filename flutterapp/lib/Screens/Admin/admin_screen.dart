@@ -1,18 +1,25 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterapp/Screens/Admin/hall_issues.dart';
 import 'package:flutterapp/Widgets/form_field.dart';
 import 'package:flutterapp/utils/data_parser.dart';
+import 'package:image_picker_modern/image_picker_modern.dart';
 
 class AdminScreen extends StatefulWidget {
   @override
   _AdminScreenState createState() => _AdminScreenState();
 }
 
-class _AdminScreenState extends State<AdminScreen> {
+class _AdminScreenState extends State<AdminScreen>
+    with TickerProviderStateMixin {
   TextEditingController _title = TextEditingController();
   TextEditingController _desc = TextEditingController();
   TextEditingController _date = TextEditingController();
   TextEditingController _hall = TextEditingController();
+
+  TabController _nestedTabController;
 
   var data;
   var singledata;
@@ -28,7 +35,7 @@ class _AdminScreenState extends State<AdminScreen> {
       "date": _date.text,
       'id': DateTime.utc(1).toString(),
     };
-    collectionReference.add(data).whenComplete(() => {Navigator.pop(context)});
+    collectionReference.add(data).whenComplete(() => Navigator.pop(context));
   }
 
   void getNotices() async {
@@ -66,21 +73,75 @@ class _AdminScreenState extends State<AdminScreen> {
     Firestore.instance
         .collection("Notices")
         .document(docId)
-        .delete().whenComplete(()=>print("Deleted"))
+        .delete()
+        .whenComplete(() => print("Deleted"))
         .catchError((e) => print(e));
   }
 
   @override
   void initState() {
+    _nestedTabController = new TabController(length: 2, vsync: this);
     super.initState();
     this.getNotices();
     this.getNoticebyId(Dataparser.id);
   }
 
+  File _image;
+
+  Future getImage() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+
+    setState(() {
+      _image = image;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _singleNotice(),
+      body: Column(
+        children: <Widget>[
+          Container(
+            height: MediaQuery.of(context).size.height / 15,
+            child: IconButton(
+                icon: Icon(
+                  Icons.camera_enhance,
+                  size: 50,
+                ),
+                onPressed: () {
+                  getImage();
+                }),
+          ),
+          Padding(padding: EdgeInsets.only(top: 30)),
+          TabBar(
+            controller: _nestedTabController,
+            indicatorColor: Colors.indigo,
+            labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            labelColor: Colors.indigo,
+            unselectedLabelColor: Colors.black54,
+            isScrollable: true,
+            tabs: <Widget>[
+              Tab(
+                child: Text("Notices"),
+              ),
+              Tab(
+                child: Text("Hall issues"),
+              ),
+            ],
+          ),
+          Container(
+            height: MediaQuery.of(context).size.height * 0.80,
+            margin: EdgeInsets.only(left: 16.0, right: 16.0),
+            child: TabBarView(
+              controller: _nestedTabController,
+              children: <Widget>[
+                _singleNotice(),
+                HallIssues(),
+              ],
+            ),
+          )
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           _showNoteDialog(context);
@@ -122,24 +183,6 @@ class _AdminScreenState extends State<AdminScreen> {
                               fontWeight: FontWeight.bold),
                         ),
                         trailing: Text(data[index]['date']),
-                      ),
-                      ListTile(
-                        leading: IconButton(
-                            icon: Icon(
-                              Icons.edit,
-                              color: Colors.green,
-                            ),
-                            onPressed: () {
-                            Dataparser.id = data[index]['id'];
-                            _showEditDialog(context,Dataparser.id);
-                            }),
-                        trailing: IconButton(
-                            icon: Icon(Icons.delete, color: Colors.red),
-                            onPressed: () {
-                              Dataparser.id = data[index]['id'];
-                              print(data[index]['id']);
-                              deleteData(data[index]['id']);
-                            }),
                       ),
                       SizedBox(height: 20)
                     ],

@@ -26,6 +26,7 @@ class _SingleNoticeState extends State<SingleNotice> {
     super.initState();
     this.getNotices(Dataparser.id);
     print(Dataparser.id);
+     
   }
 
   

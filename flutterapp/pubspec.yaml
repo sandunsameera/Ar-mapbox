@@ -28,6 +28,9 @@ dependencies:
   flutter_signin_button: ^1.0.0
   firebase_auth:
   google_sign_in: '3.2.4'
+  toast: ^0.1.5
+  image_picker_modern: ^0.4.12+3
+
 
 dev_dependencies:
   flutter_test:

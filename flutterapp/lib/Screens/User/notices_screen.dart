@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterapp/Screens/single_notice.dart';
+import 'package:flutterapp/Screens/User/compose_issues.dart';
+import 'package:flutterapp/Screens/User/single_notice.dart';
 import 'package:flutterapp/utils/data_parser.dart';
 
 class NoticeScreen extends StatefulWidget {
@@ -8,8 +9,10 @@ class NoticeScreen extends StatefulWidget {
   _NoticeScreenState createState() => _NoticeScreenState();
 }
 
-class _NoticeScreenState extends State<NoticeScreen> {
+class _NoticeScreenState extends State<NoticeScreen> with TickerProviderStateMixin{
+  // static final GoogleSignIn _googleSignIn = GoogleSignIn();
   var data;
+  TabController _nestedTabController;
 
   void getNotices() async {
     QuerySnapshot querySnapshot =
@@ -22,7 +25,9 @@ class _NoticeScreenState extends State<NoticeScreen> {
   }
 
   @override
+  // GoogleSignInAccount _user = _googleSignIn.currentUser;
   void initState() {
+    _nestedTabController = new TabController(length: 2, vsync: this);
     super.initState();
     this.getNotices();
   }
@@ -30,7 +35,38 @@ class _NoticeScreenState extends State<NoticeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _singleNotice(),
+      body: Column(
+        children: <Widget>[
+          Padding(padding: EdgeInsets.only(top: 30)),
+          TabBar(
+            controller: _nestedTabController,
+            indicatorColor: Colors.indigo,
+            labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            labelColor: Colors.indigo,
+            unselectedLabelColor: Colors.black54,
+            isScrollable: true,
+            tabs: <Widget>[
+              Tab(
+                child: Text("Notices"),
+              ),
+              Tab(
+                child: Text("Hall issues"),
+              ),
+            ],
+          ),
+          Container(
+            height: MediaQuery.of(context).size.height * 0.80,
+            margin: EdgeInsets.only(left: 16.0, right: 16.0),
+            child: TabBarView(
+              controller: _nestedTabController,
+              children: <Widget>[
+                _singleNotice(),
+                ComposeIssue(),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 
@@ -73,9 +109,12 @@ class _NoticeScreenState extends State<NoticeScreen> {
                             )),
                       ),
                       ListTile(
-                        onTap: (){
+                        onTap: () {
                           Dataparser.id = data[index]['id'].toString();
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>SingleNotice()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SingleNotice()));
                         },
                         leading: Text(
                           data[index]['hall'],
@@ -102,4 +141,6 @@ class _NoticeScreenState extends State<NoticeScreen> {
             )),
           );
   }
+
+ 
 }
