@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/Screens/Admin/hall_issues.dart';
 import 'package:flutterapp/Screens/maps_screen.dart';
+import 'package:flutterapp/Screens/search_screen.dart';
 import 'package:flutterapp/Screens/unity_screen.dart';
 
 import 'package:flutterapp/Widgets/form_field.dart';
@@ -34,6 +35,7 @@ class _AdminScreenState extends State<AdminScreen>
       "desc": _desc.text,
       "date": _date.text,
       'id': DateTime.utc(1).toString(),
+      'searchKey':_hall.text[0],
     };
     collectionReference.add(data).whenComplete(() => Navigator.pop(context));
   }
@@ -118,12 +120,25 @@ class _AdminScreenState extends State<AdminScreen>
                       size: 50,
                     ),
                     onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => HomePage()));
+                    }),
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height / 15,
+                child: IconButton(
+                    icon: Icon(
+                      Icons.youtube_searched_for,
+                      color: Colors.teal,
+                      size: 50,
+                    ),
+                    onPressed: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => HomePage()));
+                              builder: (context) => SearchScreen()));
                     }),
-              ),
+              )
             ],
           ),
           Padding(padding: EdgeInsets.only(top: 30)),
