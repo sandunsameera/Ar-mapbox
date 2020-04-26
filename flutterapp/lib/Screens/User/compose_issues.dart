@@ -41,6 +41,7 @@ class _ComposeIssueState extends State<ComposeIssue> {
       "hall": _hall.text,
       "index_no": _index_no.text,
       "date": _date.text,
+      "status":"Inprogress",
       'id': DateTime.utc(1).toString(),
     };
     collectionReference.add(data).whenComplete(() {
@@ -147,6 +148,10 @@ class _ComposeIssueState extends State<ComposeIssue> {
                         ),
                         trailing: Text(data[index]['date']),
                       ),
+                      SizedBox(height: 20),
+                       Align(
+                          alignment: Alignment.center,
+                          child: Text(data[index]['status'],style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)),
                       SizedBox(height: 20)
                     ],
                   ),

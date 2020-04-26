@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/Screens/User/compose_issues.dart';
 import 'package:flutterapp/Screens/User/single_notice.dart';
 import 'package:flutterapp/Screens/maps_screen.dart';
 import 'package:flutterapp/Screens/unity_screen.dart';
 import 'package:flutterapp/utils/data_parser.dart';
+import 'package:toast/toast.dart';
 
-import '../../main.dart';
+import '../search_screen.dart';
 
 class NoticeScreen extends StatefulWidget {
   @override
@@ -49,6 +51,21 @@ class _NoticeScreenState extends State<NoticeScreen>
                 height: MediaQuery.of(context).size.height / 15,
                 child: IconButton(
                     icon: Icon(
+                      Icons.exit_to_app,
+                      color: Colors.teal,
+                      size: 50,
+                    ),
+                    onPressed: () {
+                      FirebaseAuth.instance.signOut().whenComplete(
+                            () =>
+                                Toast.show("Successfully signed out", context),
+                          );
+                    }),
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height / 15,
+                child: IconButton(
+                    icon: Icon(
                       Icons.camera_enhance,
                       color: Colors.teal,
                       size: 50,
@@ -73,6 +90,21 @@ class _NoticeScreenState extends State<NoticeScreen>
                           MaterialPageRoute(builder: (context) => HomePage()));
                     }),
               ),
+              Container(
+                height: MediaQuery.of(context).size.height / 15,
+                child: IconButton(
+                    icon: Icon(
+                      Icons.youtube_searched_for,
+                      color: Colors.teal,
+                      size: 50,
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SearchScreen()));
+                    }),
+              )
             ],
           ),
           Padding(padding: EdgeInsets.only(top: 30)),

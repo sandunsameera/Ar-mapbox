@@ -95,35 +95,63 @@ class HomePageState extends State<HomePage> {
               padding: const EdgeInsets.all(8.0),
               child: _boxes(
                   "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/WUSL012.jpg/330px-WUSL012.jpg",
-                  7.322386, 79.987007,"Sapumal Bandara Hostel"),
+                  7.464248, 80.021113,"Girls Hostel"),
             ),
             SizedBox(width: 10.0),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: _boxes(
                   "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/WUSL019.jpg/150px-WUSL019.jpg",
-                  7.323488, 79.987574,"Gym"),
+                  7.464701, 80.021531,"Vehical parking"),
             ),
             SizedBox(width: 10.0),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: _boxes(
                   "http://www.wyb.ac.lk/images/gallery/footer_gallery/g1.jpg",
-                  7.322713, 79.989413,"New IT Center"),
+                  7.464460, 80.019425,"Pandith amaradeva Auditorium"),
             ),
              SizedBox(width: 10.0),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: _boxes(
                   "http://www.rjt.ac.lk/images/slide/s(5).jpg",
-                  7.322386, 79.987007,"Weediya bandara hostel"),
+                  7.464567, 80.019337,"Main Auditorium"),
             ),
              SizedBox(width: 10.0),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: _boxes(
                   "https://images.unsplash.com/photo-1504940892017-d23b9053d5d4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
-                  7.323339, 79.988052,"Bussiness Incubation"),
+                  7.464585, 80.018397,"Faculty of applied sciences"),
+            ),
+             SizedBox(width: 10.0),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: _boxes(
+                  "https://images.unsplash.com/photo-1504940892017-d23b9053d5d4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+                  7.464267, 80.017662,"WUSL Gym"),
+            ),
+             SizedBox(width: 10.0),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: _boxes(
+                  "https://images.unsplash.com/photo-1504940892017-d23b9053d5d4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+                  7.465793, 80.020731,"Open theater WUSL"),
+            ),
+             SizedBox(width: 10.0),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: _boxes(
+                  "https://images.unsplash.com/photo-1504940892017-d23b9053d5d4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+                  7.466806, 80.020884,"Staff quaters"),
+            ),
+             SizedBox(width: 10.0),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: _boxes(
+                  "https://images.unsplash.com/photo-1504940892017-d23b9053d5d4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+                  7.462997, 80.022848,"WUSL main canteen"),
             ),
           ],
         ),
@@ -270,12 +298,12 @@ class HomePageState extends State<HomePage> {
       width: MediaQuery.of(context).size.width,
       child: GoogleMap(
         mapType: MapType.normal,
-        initialCameraPosition:  CameraPosition(target: LatLng(7.322592, 79.986917), zoom: 15),
+        initialCameraPosition:  CameraPosition(target: LatLng(7.462997, 80.022848), zoom: 15),
         onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
         },
         markers: {
-          newyork1Marker,newyork2Marker,newyork3Marker,newyork4Marker,newyork5Marker,gramercyMarker,bernardinMarker,blueMarker
+          newyork1Marker,newyork2Marker,newyork3Marker,newyork4Marker,newyork5Marker,gramercyMarker,bernardinMarker,blueMarker,newyork5Marker
         },
       ),
     );
@@ -289,26 +317,26 @@ class HomePageState extends State<HomePage> {
 }
 
 Marker gramercyMarker = Marker(
-  markerId: MarkerId('Sapumal bandara Hostel'),
-  position: LatLng(7.322386, 79.987007),
-  infoWindow: InfoWindow(title: 'Sapumal bandara Hostel'),
+  markerId: MarkerId('Girls Hostel'),
+  position: LatLng(7.464248,80.021113),
+  infoWindow: InfoWindow(title: 'Girls Hostel'),
   icon: BitmapDescriptor.defaultMarkerWithHue(
     BitmapDescriptor.hueViolet,
   ),
 );
 
 Marker bernardinMarker = Marker(
-  markerId: MarkerId('Gym'),
-  position: LatLng(7.323488, 79.987574),
-  infoWindow: InfoWindow(title: 'Gym'),
+  markerId: MarkerId('Vehical Parking'),
+  position: LatLng(7.464701, 80.021531),
+  infoWindow: InfoWindow(title: 'Vehical Parking'),
   icon: BitmapDescriptor.defaultMarkerWithHue(
     BitmapDescriptor.hueViolet,
   ),
 );
 Marker blueMarker = Marker(
-  markerId: MarkerId('Veediya bandara Hoste;'),
-  position: LatLng(7.322386, 79.987007),
-  infoWindow: InfoWindow(title: 'New IT Center'),
+  markerId: MarkerId("Pandith amaradeva Auditorium"),
+  position: LatLng(7.464460, 80.019425,),
+  infoWindow: InfoWindow(title: "Pandith amaradeva Auditorium"),
   icon: BitmapDescriptor.defaultMarkerWithHue(
     BitmapDescriptor.hueViolet,
   ),
@@ -317,44 +345,52 @@ Marker blueMarker = Marker(
 //New York Marker
 
 Marker newyork1Marker = Marker(
-  markerId: MarkerId('newyork1'),
-  position: LatLng(7.323488, 79.987574),
-  infoWindow: InfoWindow(title: 'New IT Unit'),
+  markerId: MarkerId("Main Auditorium"),
+  position: LatLng(7.464567, 80.019337,),
+  infoWindow: InfoWindow(title: "Main Auditorium"),
   icon: BitmapDescriptor.defaultMarkerWithHue(
     BitmapDescriptor.hueViolet,
   ),
 );
 Marker newyork2Marker = Marker(
-  markerId: MarkerId('newyork2'),
-  position: LatLng(7.322951, 79.988212),
-  infoWindow: InfoWindow(title: 'Gym'),
+  markerId: MarkerId("Faculty of applied sciences"),
+  position: LatLng(7.464585, 80.018397,),
+  infoWindow: InfoWindow(title: "Faculty of applied sciences"),
   icon: BitmapDescriptor.defaultMarkerWithHue(
     BitmapDescriptor.hueViolet,
   ),
 );
 Marker newyork3Marker = Marker(
-  markerId: MarkerId('newyork3'),
-  position: LatLng(7.322713, 79.989413),
-  infoWindow: InfoWindow(title: 'New IT Center'),
+  markerId: MarkerId("WUSL Gym"),
+  position: LatLng( 7.464267, 80.017662,),
+  infoWindow: InfoWindow(title:"WUSL Gym"),
   icon: BitmapDescriptor.defaultMarkerWithHue(
     BitmapDescriptor.hueViolet,
   ),
 );
 
 Marker newyork4Marker = Marker(
-  markerId: MarkerId('newyork4'),
-  position: LatLng(7.321884, 79.986636),
-  infoWindow: InfoWindow(title: 'Veediya bandara hostel'),
+  markerId: MarkerId("Open theater WUSL"),
+  position: LatLng(7.465793, 80.020731,),
+  infoWindow: InfoWindow(title: "Open theater WUSL"),
   icon: BitmapDescriptor.defaultMarkerWithHue(
     BitmapDescriptor.hueViolet,
   ),
 );
 
 Marker newyork5Marker = Marker(
-  markerId: MarkerId('newyork5'),
-  position: LatLng(7.323339, 79.988052),
-  infoWindow: InfoWindow(title: 'Bussiness Incubation'),
+  markerId: MarkerId("Staff quaters"),
+  position: LatLng(7.466806, 80.020884,),
+  infoWindow: InfoWindow(title: "Staff quaters"),
   icon: BitmapDescriptor.defaultMarkerWithHue(
     BitmapDescriptor.hueViolet,
   ),
 );
+
+Marker newyork6Marker = Marker(
+  markerId: MarkerId("WUSL main canteen"),
+  position: LatLng(7.462997, 80.022848,),
+  infoWindow: InfoWindow(title:"WUSL main canteen"),
+  icon: BitmapDescriptor.defaultMarkerWithHue(
+    BitmapDescriptor.hueViolet,
+  ),);

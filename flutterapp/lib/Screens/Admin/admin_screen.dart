@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/Screens/Admin/hall_issues.dart';
 import 'package:flutterapp/Screens/maps_screen.dart';
@@ -96,6 +97,18 @@ class _AdminScreenState extends State<AdminScreen>
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
+               Container(
+                height: MediaQuery.of(context).size.height / 15,
+                child: IconButton(
+                    icon: Icon(
+                      Icons.exit_to_app,
+                      color: Colors.teal,
+                      size: 50,
+                    ),
+                    onPressed: () {
+                      FirebaseAuth.instance.signOut();
+                    }),
+              ),
               Container(
                 height: MediaQuery.of(context).size.height / 15,
                 child: IconButton(

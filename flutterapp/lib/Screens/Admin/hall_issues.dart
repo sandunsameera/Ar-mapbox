@@ -9,6 +9,8 @@ class HallIssues extends StatefulWidget {
 
 class _HallIssuesState extends State<HallIssues> {
   var data;
+  var status;
+
   void getAllIssues() async {
     QuerySnapshot querySnapshot =
         await Firestore.instance.collection("Issues").getDocuments();
@@ -40,6 +42,9 @@ class _HallIssuesState extends State<HallIssues> {
             itemCount: data.length != null ? data.length : 0,
             itemBuilder: (BuildContext context, int index) {
               return InkWell(
+                onLongPress: (){
+                  print("change status");
+                },
                 child: Card(
                   child: Column(
                     children: <Widget>[
@@ -66,7 +71,8 @@ class _HallIssuesState extends State<HallIssues> {
                         ),
                         trailing: Text(data[index]['date']),
                       ),
-                      SizedBox(height: 20)
+                      SizedBox(height: 20),
+                     
                     ],
                   ),
                 ),

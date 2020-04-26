@@ -90,6 +90,7 @@ Widget buildResultCard(data) {
       elevation: 2.0,
       child: Container(
           child: Column(children: [
+        SizedBox(height: 10),
         Center(
           child: Text(
             data['hall'],
@@ -99,13 +100,9 @@ Widget buildResultCard(data) {
             ),
           ),
         ),
-        SizedBox(
-          height: 10,
-        ),
+        SizedBox(height: 10),
         Text(data["title"]),
-        SizedBox(
-          height: 10,
-        ),
+        SizedBox(height: 10),
         Text(data["date"]),
       ])));
 }
